@@ -1,0 +1,174 @@
+simple_audio.py
+
+Epoch 00019: early stopping
+Test set accuracy: 84%
+Predictions for "no"
+['up' 'right' 'stop' 'left' 'yes' 'go' 'down' 'no'] tf.Tensor(
+[2.24567384e-06 3.68001702e-06 1.10102055e-05 1.35030123e-05
+ 6.45009059e-05 1.48888201e-01 6.38207095e-03 8.44634831e-01], shape=(8,), dtype=float32)
+Predictions for "right"
+['up' 'right' 'stop' 'left' 'yes' 'go' 'down' 'no'] tf.Tensor(
+[1.9235324e-15 1.0000000e+00 9.2263751e-20 1.8059817e-08 5.4278496e-16
+ 1.4533176e-13 5.3432707e-16 3.4954727e-15], shape=(8,), dtype=float32)
+Run time 188.39765003799948
+
+simple_audio_frame_length=512_frame_step=256
+
+Epoch 00017: early stopping
+Test set accuracy: 80%
+Predictions for "no"
+['up' 'right' 'stop' 'left' 'yes' 'go' 'down' 'no'] tf.Tensor(
+[2.9871557e-05 5.3473796e-05 8.4431020e-05 1.3773992e-04 2.2982337e-04
+ 1.2608024e-01 1.5678415e-02 8.5770607e-01], shape=(8,), dtype=float32)
+Predictions for "right"
+['up' 'right' 'stop' 'left' 'yes' 'go' 'down' 'no'] tf.Tensor(
+[1.4781077e-14 9.9999988e-01 7.0182056e-18 1.0341215e-07 4.4241542e-12
+ 2.4181537e-09 2.8095939e-13 3.2779204e-09], shape=(8,), dtype=float32)
+Run time 167.67471530499824
+
+
+simple_audio_frame_length=1024_frame_step=512.py
+
+Epoch 00015: early stopping
+Test set accuracy: 78%
+Predictions for "no"
+['up' 'right' 'stop' 'left' 'yes' 'go' 'down' 'no'] tf.Tensor(
+[6.8766216e-04 2.1020026e-04 2.9291128e-04 2.7725764e-03 7.3199789e-04
+ 2.9165959e-01 6.0072899e-02 6.4357209e-01], shape=(8,), dtype=float32)
+Predictions for "right"
+['up' 'right' 'stop' 'left' 'yes' 'go' 'down' 'no'] tf.Tensor(
+[2.7653373e-09 9.9997056e-01 1.9140074e-12 2.9123788e-05 2.3015465e-07
+ 9.5372940e-08 1.2337519e-10 1.1261506e-09], shape=(8,), dtype=float32)
+Run time 148.2863283279985
+
+simple_audio_mfcc_frame_length=256_frame_step=64.py
+
+Epoch 00015: early stopping
+Test set accuracy: 84%
+Predictions for "no"
+['up' 'right' 'stop' 'left' 'yes' 'go' 'down' 'no'] tf.Tensor(
+[1.01332153e-04 1.57227878e-05 1.18952936e-04 5.19891910e-04
+ 3.89490830e-04 3.51869106e-01 6.98692352e-02 5.77116191e-01], shape=(8,), dtype=float32)
+Predictions for "right"
+['up' 'right' 'stop' 'left' 'yes' 'go' 'down' 'no'] tf.Tensor(
+[2.4004356e-09 9.9999106e-01 6.9917240e-12 8.9200066e-06 2.7548401e-08
+ 4.7005039e-10 2.4848774e-08 5.5793470e-10], shape=(8,), dtype=float32)
+Run time 180.47400639100124
+
+simple_audio_mfcc_frame_length=256_frame_step=128.py
+
+Epoch 00016: early stopping
+Test set accuracy: 87%
+Predictions for "no"
+['up' 'right' 'stop' 'left' 'yes' 'go' 'down' 'no'] tf.Tensor(
+[2.0487585e-05 4.7476578e-06 1.3670758e-05 2.2935730e-05 1.3270177e-04
+ 2.6526427e-01 1.8182243e-01 5.5271876e-01], shape=(8,), dtype=float32)
+Predictions for "right"
+['up' 'right' 'stop' 'left' 'yes' 'go' 'down' 'no'] tf.Tensor(
+[1.9143279e-10 9.9999571e-01 4.2390080e-12 4.2118331e-06 3.1466630e-08
+ 2.9667013e-09 2.0197728e-08 3.2647431e-08], shape=(8,), dtype=float32)
+Run time 173.32979160499963
+
+simple_audio_mfcc_frame_length=128_frame_step=64.py
+
+Epoch 00028: early stopping
+Test set accuracy: 77%
+Predictions for "no"
+['up' 'right' 'stop' 'left' 'yes' 'go' 'down' 'no'] tf.Tensor(
+[9.3258418e-02 2.6566300e-05 3.4100211e-03 9.7977114e-04 5.9427570e-05
+ 3.2723996e-01 1.4910819e-01 4.2591763e-01], shape=(8,), dtype=float32)
+Predictions for "right"
+['up' 'right' 'stop' 'left' 'yes' 'go' 'down' 'no'] tf.Tensor(
+[2.9783712e-10 9.9967062e-01 9.1837264e-14 3.2942963e-04 3.4183769e-09
+ 6.7324949e-13 1.9698630e-11 2.5432539e-10], shape=(8,), dtype=float32)
+Run time 301.2152697099991
+
+simple_audio_mfcc_frame_length=512_frame_step=256.py
+
+Epoch 00020: early stopping
+Test set accuracy: 86%
+Predictions for "no"
+['up' 'right' 'stop' 'left' 'yes' 'go' 'down' 'no'] tf.Tensor(
+[1.0826761e-05 5.9204103e-07 1.7171677e-06 9.1767618e-07 9.9414274e-07
+ 1.0331640e-01 6.9540128e-02 8.2712847e-01], shape=(8,), dtype=float32)
+Predictions for "right"
+['up' 'right' 'stop' 'left' 'yes' 'go' 'down' 'no'] tf.Tensor(
+[1.1290899e-12 1.0000000e+00 3.8612126e-14 1.7096669e-08 3.9559338e-09
+ 1.3006712e-11 1.6013420e-12 6.9400058e-13], shape=(8,), dtype=float32)
+Run time 205.05976448299953
+
+simple_audio_mfcc_frame_length=512_frame_step=128.py
+
+Epoch 00012: early stopping
+Test set accuracy: 86%
+Predictions for "no"
+['up' 'right' 'stop' 'left' 'yes' 'go' 'down' 'no'] tf.Tensor(
+[1.4476618e-03 4.6290985e-05 6.3830748e-04 5.2202893e-05 2.7977485e-06
+ 4.0638989e-01 4.2711992e-02 5.4871088e-01], shape=(8,), dtype=float32)
+Predictions for "right"
+['up' 'right' 'stop' 'left' 'yes' 'go' 'down' 'no'] tf.Tensor(
+[7.9833290e-10 9.9997568e-01 6.1823520e-09 2.1570067e-05 2.6730813e-06
+ 4.3599846e-10 7.1966890e-09 2.5212440e-10], shape=(8,), dtype=float32)
+Run time 138.8151538889997
+
+simple_audio_mfcc_frame_length=1024_frame_step=256_fft_length=1024.py
+
+poch 00014: early stopping
+Test set accuracy: 85%
+Predictions for "no"
+['up' 'right' 'stop' 'left' 'yes' 'go' 'down' 'no'] tf.Tensor(
+[1.7434043e-04 3.6903327e-06 3.3522130e-04 1.0022715e-03 1.9656967e-05
+ 6.2221333e-02 4.5485333e-02 8.9075816e-01], shape=(8,), dtype=float32)
+Predictions for "right"
+['up' 'right' 'stop' 'left' 'yes' 'go' 'down' 'no'] tf.Tensor(
+[2.4133456e-11 1.0000000e+00 3.6970849e-15 1.9199291e-08 1.0611341e-10
+ 4.7294564e-11 9.3750337e-12 2.2969961e-11], shape=(8,), dtype=float32)
+Run time 151.649564112
+
+simple_audio_mfcc_frame_length=1024_frame_step=512.py
+
+Epoch 00019: early stopping
+Test set accuracy: 87%
+Predictions for "no"
+['up' 'right' 'stop' 'left' 'yes' 'go' 'down' 'no'] tf.Tensor(
+[1.7504898e-04 3.5505815e-05 3.0446351e-03 3.5541065e-04 3.5898593e-05
+ 1.7545770e-01 5.6262515e-02 7.6463324e-01], shape=(8,), dtype=float32)
+Predictions for "right"
+['up' 'right' 'stop' 'left' 'yes' 'go' 'down' 'no'] tf.Tensor(
+[1.5404117e-13 9.9999988e-01 3.8875865e-14 6.5344381e-08 1.4513065e-09
+ 6.3559471e-13 2.2007924e-09 9.0265130e-12], shape=(8,), dtype=float32)
+Run time 192.6527670510004
+
+simple_audio_mfcc_frame_length=2048_frame_step=512_fft_length=2048.py
+
+Epoch 00013: early stopping
+Test set accuracy: 85%
+Predictions for "no"
+['up' 'right' 'stop' 'left' 'yes' 'go' 'down' 'no'] tf.Tensor(
+[1.6287367e-03 2.6205955e-06 9.2493547e-06 8.2608277e-04 8.0746700e-05
+ 1.2529657e-02 3.8007565e-03 9.8112214e-01], shape=(8,), dtype=float32)
+Predictions for "right"
+['up' 'right' 'stop' 'left' 'yes' 'go' 'down' 'no'] tf.Tensor(
+[6.7123863e-12 9.9999559e-01 1.9071161e-13 4.4092126e-06 1.5412320e-08
+ 9.0459286e-13 5.8277216e-11 2.9353117e-12], shape=(8,), dtype=float32)
+Run time 139.5767547430005
+
+simple_audio_mfcc_frame_length=2048_frame_step=1024.py
+
+Epoch 00013: early stopping
+Test set accuracy: 83%
+Predictions for "no"
+['up' 'right' 'stop' 'left' 'yes' 'go' 'down' 'no'] tf.Tensor(
+[1.2381954e-02 2.1871158e-04 3.9323675e-03 1.3936648e-02 1.7006858e-05
+ 1.8815310e-01 5.3088382e-02 7.2827184e-01], shape=(8,), dtype=float32)
+Predictions for "right"
+['up' 'right' 'stop' 'left' 'yes' 'go' 'down' 'no'] tf.Tensor(
+[2.0162238e-12 9.9999952e-01 2.1190643e-14 3.0925463e-07 1.0000226e-07
+ 2.9000666e-10 7.9016538e-10 1.3883363e-10], shape=(8,), dtype=float32)
+Run time 134.30879381600244
+
+
+
+
+
+

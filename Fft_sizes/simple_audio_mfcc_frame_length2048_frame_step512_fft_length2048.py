@@ -17,7 +17,7 @@ from tensorflow.keras import models
 seed = 42
 tf.random.set_seed(seed)
 np.random.seed(seed)
-time_start=time.perf_counter()
+time_start = time.perf_counter()
 
 data_dir = pathlib.Path('data/mini_speech_commands')
 if not data_dir.exists():
@@ -74,6 +74,8 @@ waveform_ds = files_ds.map(get_waveform_and_label, num_parallel_calls=AUTOTUNE)
 
 
 def get_spectrogram(waveform):
+  sample_rate = 16000.0
+
   # Padding for files with less than 16000 samples
   zero_padding = tf.zeros([16000] - tf.shape(waveform), dtype=tf.float32)
 
@@ -82,11 +84,26 @@ def get_spectrogram(waveform):
   waveform = tf.cast(waveform, tf.float32)
   equal_length = tf.concat([waveform, zero_padding], 0)
   spectrogram = tf.signal.stft(
-      equal_length, frame_length=256, frame_step=128)
+      equal_length, frame_length=2048, frame_step=512, fft_length=2048)
 
   spectrogram = tf.abs(spectrogram)
+  
+  # Warp the linear scale spectrograms into the mel-scale.
+  num_spectrogram_bins = spectrogram.shape[-1]
+  lower_edge_hertz, upper_edge_hertz, num_mel_bins = 80.0, 7600.0, 80
+  linear_to_mel_weight_matrix = tf.signal.linear_to_mel_weight_matrix(num_mel_bins, num_spectrogram_bins, sample_rate, lower_edge_hertz,  upper_edge_hertz)
+  mel_spectrogram = tf.tensordot(spectrogram, linear_to_mel_weight_matrix, 1)
+  mel_spectrogram.set_shape(spectrogram.shape[:-1].concatenate(linear_to_mel_weight_matrix.shape[-1:]))
+
+  # Compute a stabilized log to get log-magnitude mel-scale spectrograms.
+  log_mel_spectrogram = tf.math.log(mel_spectrogram + 1e-6)
+
+  # Compute MFCCs from log_mel_spectrograms and take the first 13.
+  spectrogram = tf.signal.mfccs_from_log_mel_spectrograms(log_mel_spectrogram)[..., :13]
 
   return spectrogram
+
+
 
 def get_spectrogram_and_label_id(audio, label):
   spectrogram = get_spectrogram(audio)
@@ -192,9 +209,9 @@ sample_ds = preprocess_dataset([str(sample_file)])
 
 for spectrogram, label in sample_ds.batch(1):
   prediction = model(spectrogram)
-  
   print(f'Predictions for "{commands[label[0]]}"')
   print(commands, tf.nn.softmax(prediction[0]))
 
 time_end=time.perf_counter()
 print(f'Run time {time_end - time_start}')
+

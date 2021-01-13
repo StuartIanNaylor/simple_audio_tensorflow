@@ -82,7 +82,7 @@ def get_spectrogram(waveform):
   waveform = tf.cast(waveform, tf.float32)
   equal_length = tf.concat([waveform, zero_padding], 0)
   spectrogram = tf.signal.stft(
-      equal_length, frame_length=256, frame_step=128)
+      equal_length, frame_length=512, frame_step=256)
 
   spectrogram = tf.abs(spectrogram)
 
@@ -129,7 +129,7 @@ norm_layer.adapt(spectrogram_ds.map(lambda x, _: x))
 
 model = models.Sequential([
     layers.Input(shape=input_shape),
-    preprocessing.Resizing(32, 32), 
+    #preprocessing.Resizing(32, 32), 
     norm_layer,
     layers.Conv2D(32, 3, activation='relu'),
     layers.Conv2D(64, 3, activation='relu'),
