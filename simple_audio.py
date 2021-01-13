@@ -5,6 +5,7 @@ import pathlib
 import numpy as np
 #import seaborn as sns
 import tensorflow as tf
+import time
 
 from tensorflow.keras.layers.experimental import preprocessing
 from tensorflow.keras import layers
@@ -16,6 +17,7 @@ from tensorflow.keras import models
 seed = 42
 tf.random.set_seed(seed)
 np.random.seed(seed)
+time_start=time.perf_counter()
 
 data_dir = pathlib.Path('data/mini_speech_commands')
 if not data_dir.exists():
@@ -153,7 +155,7 @@ history = model.fit(
     train_ds, 
     validation_data=val_ds,  
     epochs=EPOCHS,
-    callbacks=tf.keras.callbacks.EarlyStopping(verbose=1, patience=2),
+    callbacks=tf.keras.callbacks.EarlyStopping(verbose=1, patience=3),
 )
 
 
@@ -182,4 +184,17 @@ for spectrogram, label in sample_ds.batch(1):
   prediction = model(spectrogram)
   print(f'Predictions for "{commands[label[0]]}"')
   print(commands, tf.nn.softmax(prediction[0]))
+  
+  
+sample_file = data_dir/'right/3a789a0d_nohash_0.wav'
 
+sample_ds = preprocess_dataset([str(sample_file)])
+
+for spectrogram, label in sample_ds.batch(1):
+  prediction = model(spectrogram)
+  
+  print(f'Predictions for "{commands[label[0]]}"')
+  print(commands, tf.nn.softmax(prediction[0]))
+
+time_end=time.perf_counter()
+print(f'Run time {time_end - time_start}')

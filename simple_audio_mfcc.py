@@ -172,7 +172,7 @@ history = model.fit(
     train_ds, 
     validation_data=val_ds,  
     epochs=EPOCHS,
-    callbacks=tf.keras.callbacks.EarlyStopping(verbose=1, patience=2),
+    callbacks=tf.keras.callbacks.EarlyStopping(verbose=1, patience=3),
 )
 
 
