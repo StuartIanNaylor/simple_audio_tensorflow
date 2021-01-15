@@ -23,10 +23,17 @@ if not data_dir.exists():
       'speech_commands_v0.02.tar.gz',
       origin="http://download.tensorflow.org/data/speech_commands_v0.02.tar.gz",
       extract=True,
-      cache_dir='.', cache_subdir='data')
+      cache_dir='.', cache_subdir='data/speech_commands_v0.02')
 
 commands = np.array(tf.io.gfile.listdir(str(data_dir)))
 commands = commands[commands != 'README.md']
+commands = commands[commands != 'LICENSE']
+commands = commands[commands != 'speech_commands_v0.02.tar.gz']
+commands = commands[commands != 'testing_list.txt']
+commands = commands[commands != 'validation_list.txt']
+commands = commands[commands != '.DS_Store']
+commands = commands[commands != '_background_noise_']
+
 print('Commands:', commands)
 
 filenames = tf.io.gfile.glob(str(data_dir) + '/*/*')

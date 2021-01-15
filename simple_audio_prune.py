@@ -235,6 +235,23 @@ for spectrogram, label in sample_ds.batch(1):
 time_end=time.perf_counter()
 print(f'Run time {time_end - time_start}')
 
+x=-1
+for command in commands:
+  x=x+1
+  mypath = str(data_dir) + "/" + str(command) + "/"
+  from os import listdir
+  from os.path import isfile, join
+  onlyfiles = [f for f in listdir(mypath) if isfile(join(mypath, f))]
+  for file in onlyfiles:
+    sample_ds = preprocess_dataset([mypath + str(file)])
+
+    for spectrogram, label in sample_ds.batch(1):
+      prediction = model(spectrogram)
+      confidence = tf.nn.softmax(prediction[0])
+      if confidence[x] < .3:
+        os.remove(mypath + str(file))
+        print(f'Remove {mypath + str(file) + "           "}', end='\r')
+        
 
 
 

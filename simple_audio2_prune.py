@@ -19,16 +19,22 @@ tf.random.set_seed(seed)
 np.random.seed(seed)
 time_start = time.perf_counter()
 
-data_dir = pathlib.Path('data/mini_speech_commands')
+data_dir = pathlib.Path('data/speech_commands_v0.02')
 if not data_dir.exists():
   tf.keras.utils.get_file(
-      'mini_speech_commands.zip',
-      origin="http://storage.googleapis.com/download.tensorflow.org/data/mini_speech_commands.zip",
+      'speech_commands_v0.02.tar.gz',
+      origin="http://download.tensorflow.org/data/speech_commands_v0.02.tar.gz",
       extract=True,
-      cache_dir='.', cache_subdir='data')
+      cache_dir='.', cache_subdir='data/speech_commands_v0.02')
 
 commands = np.array(tf.io.gfile.listdir(str(data_dir)))
 commands = commands[commands != 'README.md']
+commands = commands[commands != 'LICENSE']
+commands = commands[commands != 'speech_commands_v0.02.tar.gz']
+commands = commands[commands != 'testing_list.txt']
+commands = commands[commands != 'validation_list.txt']
+commands = commands[commands != '.DS_Store']
+commands = commands[commands != '_background_noise_']
 print('Commands:', commands)
 
 filenames = tf.io.gfile.glob(str(data_dir) + '/*/*')
@@ -234,7 +240,22 @@ for spectrogram, label in sample_ds.batch(1):
 
 time_end=time.perf_counter()
 print(f'Run time {time_end - time_start}')
+x=-1
+for command in commands:
+  x=x+1
+  mypath = str(data_dir) + "/" + str(command) + "/"
+  from os import listdir
+  from os.path import isfile, join
+  onlyfiles = [f for f in listdir(mypath) if isfile(join(mypath, f))]
+  for file in onlyfiles:
+    sample_ds = preprocess_dataset([mypath + str(file)])
 
+    for spectrogram, label in sample_ds.batch(1):
+      prediction = model(spectrogram)
+      confidence = tf.nn.softmax(prediction[0])
+      if confidence[x] < .1:
+        os.remove(mypath + str(file))
+        print(f'Remove {mypath + str(file) + "           "}', end='\r')
 
 
 
