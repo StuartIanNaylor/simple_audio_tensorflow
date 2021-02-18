@@ -1,3 +1,6 @@
+import sys
+from os import listdir
+from os.path import isfile, join
 import os
 import pathlib
 
@@ -12,6 +15,7 @@ from tensorflow.keras import layers
 from tensorflow.keras import models
 #from IPython import display
 
+np.set_printoptions(threshold=sys.maxsize)
 
 # Set seed for experiment reproducibility
 seed = 42
@@ -28,13 +32,6 @@ if not data_dir.exists():
       cache_dir='.', cache_subdir='data/speech_commands_v0.02')
 
 commands = np.array(tf.io.gfile.listdir(str(data_dir)))
-commands = commands[commands != 'README.md']
-commands = commands[commands != 'LICENSE']
-commands = commands[commands != 'speech_commands_v0.02.tar.gz']
-commands = commands[commands != 'testing_list.txt']
-commands = commands[commands != 'validation_list.txt']
-commands = commands[commands != '.DS_Store']
-commands = commands[commands != '_background_noise_']
 print('Commands:', commands)
 
 filenames = tf.io.gfile.glob(str(data_dir) + '/*/*')
@@ -147,6 +144,8 @@ for spectrogram, _ in spectrogram_ds.take(1):
 print('Input shape:', input_shape)
 num_labels = len(commands)
 
+time_preprocess = time.perf_counter()
+
 norm_layer = preprocessing.Normalization()
 norm_layer.adapt(spectrogram_ds.map(lambda x, _: x))
 
@@ -173,15 +172,15 @@ model.compile(
     metrics=['accuracy'],
 )
 
-EPOCHS = 50
+EPOCHS = 5000
 history = model.fit(
     train_ds, 
     validation_data=val_ds,  
     epochs=EPOCHS,
-    callbacks=tf.keras.callbacks.EarlyStopping(verbose=0, patience=5),
+    callbacks=tf.keras.callbacks.EarlyStopping(verbose=0, patience=500),
 )
 
-
+time_end=time.perf_counter()
 
 test_audio = []
 test_labels = []
@@ -199,46 +198,12 @@ y_true = test_labels
 test_acc = sum(y_pred == y_true) / len(y_true)
 print(f'Test set accuracy: {test_acc:.0%}')
 
-sample_file = data_dir/'no/01bb6a2a_nohash_0.wav'
+confusion_mtx = tf.math.confusion_matrix(y_true, y_pred)
+print(confusion_mtx)
 
-sample_ds = preprocess_dataset([str(sample_file)])
 
-for spectrogram, label in sample_ds.batch(1):
-  prediction = model(spectrogram)
-  print(f'Predictions for "{commands[label[0]]}"')
-  print(commands, tf.nn.softmax(prediction[0]))
-  
-  
-sample_file = data_dir/'right/3a789a0d_nohash_0.wav'
 
-sample_ds = preprocess_dataset([str(sample_file)])
-
-for spectrogram, label in sample_ds.batch(1):
-  prediction = model(spectrogram)
-  print(f'Predictions for "{commands[label[0]]}"')
-  print(commands, tf.nn.softmax(prediction[0]))
-
-time_end=time.perf_counter()
-
-sample_file = data_dir/'left/2dce72b3_nohash_0.wav'
-
-sample_ds = preprocess_dataset([str(sample_file)])
-
-for spectrogram, label in sample_ds.batch(1):
-  prediction = model(spectrogram)
-  print(f'Predictions for "{commands[label[0]]}"')
-  print(commands, tf.nn.softmax(prediction[0]))
-
-sample_file = data_dir/'go/3d53244b_nohash_1.wav'
-
-sample_ds = preprocess_dataset([str(sample_file)])
-
-for spectrogram, label in sample_ds.batch(1):
-  prediction = model(spectrogram)
-  print(f'Predictions for "{commands[label[0]]}"')
-  print(commands, tf.nn.softmax(prediction[0]))
-
-time_end=time.perf_counter()
-print(f'Run time {time_end - time_start}')
-
+print("Time start", "Time preprocess", "Time end")
+print(time_start, time_preprocess, time_end)
+    
 
